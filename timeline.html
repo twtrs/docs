@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <style>
+        html {
+            font-size: 20px;
+            font-family: Pretendard, sans-serif;
+        }
+        code {
+            font-family: Iosevka, monospace;
+        }
+        main {
+            padding: 1rem;
+        }
+        main, h1, h2, h3, p, div {
+            width: fit-content;
+        }
+        p {
+            margin: 0 0 0 1rem;
+        }
+        table {
+            border-collapse: collapse;
+            border: 4px solid black;
+            font-size: 32px;
+            margin-left: 1rem;
+        }
+        th {
+            padding: 0.5rem 1rem;
+            border-bottom: 4px solid black;
+        }
+        .odd {
+            background: hsl(120, 0%, 95%);
+        }
+        .even {
+            background: hsl(120, 0%, 85%);
+        }
+        .sep {
+            border-right: 4px solid black;
+        }
+        th, td {
+            border: 2px solid black;
+            text-align: center;
+        }
+        td.check {
+            background: hsl(120, 55%, 90%);
+        }
+        .even td.check {
+            background: hsl(120, 55%, 80%);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>
+            미스키 타임라인 설명
+        </h1>
+        <p>
+            본 설명은
+            <a href="https://github.com/misskey-dev/misskey">misskey-dev/misskey</a>
+            develop 브랜치의 커밋 <br />
+            <code>fb19456: 2.120.0-alpha.8</code> (2022-11-13)을 기준으로 합니다.
+        </p>
+        <div>
+            <h3>홈 타임라인</h3>
+            <p>
+                <a href="https://github.com/misskey-dev/misskey/blob/fb19456b61cdc1e46020c952dd96ea43cb3eb77f/packages/backend/src/server/api/endpoints/notes/timeline.ts#L76-L79">
+                    packages/backend/src/server/api/endpoints/notes/timeline.ts
+                </a>
+                76-79번 줄 <br />
+                ▷ 자기 자신, 혹은 팔로우 중인 유저의 노트
+             </p>
+        </div>
+        <div>
+            <h3>로컬 타임라인</h3>
+            <p>
+                <a href="https://github.com/misskey-dev/misskey/blob/fb19456b61cdc1e46020c952dd96ea43cb3eb77f/packages/backend/src/server/api/endpoints/notes/local-timeline.ts#L79">
+                    packages/backend/src/server/api/endpoints/notes/local-timeline.ts
+                </a>
+                79번 줄 <br />
+                ▷ 공개 범위 = "공개"이고, 로컬 인스턴스의 노트
+             </p>
+        </div>
+        <div>
+            <h3>소셜 타임라인</h3>
+            <p>
+                <a href="https://github.com/misskey-dev/misskey/blob/fb19456b61cdc1e46020c952dd96ea43cb3eb77f/packages/backend/src/server/api/endpoints/notes/hybrid-timeline.ts#L84-L87">
+                    packages/backend/src/server/api/endpoints/notes/hybrid-timeline.ts
+                </a>
+                84-87번 줄 <br />
+                ▷ 자기 자신, 혹은 팔로우 중인 유저의 노트 <br />
+                ▷ 공개 범위 = "공개"이고, 로컬 인스턴스의 노트
+             </p>
+        </div>
+        <div>
+            <h3>글로벌 타임라인</h3>
+            <p>
+                <a href="https://github.com/misskey-dev/misskey/blob/fb19456b61cdc1e46020c952dd96ea43cb3eb77f/packages/backend/src/server/api/endpoints/notes/global-timeline.ts#L73-L74">
+                    packages/backend/src/server/api/endpoints/notes/global-timeline.ts
+                </a>
+                73-74번 줄 <br />
+                ▷ 공개 범위 = "공개"이고, 채널에 투고되지 않은 노트
+             </p>
+        </div>
+        <h2>표로 정리하자면...</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th class="sep" colspan="2">출처</th>
+                    <th colspan="4">타임라인</th>
+                </tr>
+                <tr>
+                    <th>사용자</th>
+                    <th class="sep">공개 범위</th>
+                    <th>홈</th>
+                    <th>로컬</th>
+                    <th>소셜</th>
+                    <th>글로벌</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="odd">
+                    <td rowspan="2">로컬 (팔로우)</td>
+                    <td class="sep">공개</td>
+                    <td class="check">✔</td>
+                    <td class="check">✔</td>
+                    <td class="check">✔</td>
+                    <td class="check">✔</td>
+                </tr>
+                <tr class="odd">
+                    <td class="sep">홈/팔로우</td>
+                    <td class="check">✔</td>
+                    <td></td>
+                    <td class="check">✔</td>
+                    <td></td>
+                </tr>
+                <tr class="even">
+                    <td rowspan="2">원격 (팔로우)</td>
+                    <td class="sep">공개</td>
+                    <td class="check">✔</td>
+                    <td></td>
+                    <td class="check">✔</td>
+                    <td class="check">✔</td>
+                </tr>
+                <tr class="even">
+                    <td class="sep">홈/팔로우</td>
+                    <td class="check">✔</td>
+                    <td></td>
+                    <td class="check">✔</td>
+                    <td></td>
+                </tr>
+                <tr class="odd">
+                    <td rowspan="2">로컬 (비팔로우)</td>
+                    <td class="sep">공개</td>
+                    <td></td>
+                    <td class="check">✔</td>
+                    <td class="check">✔</td>
+                    <td class="check">✔</td>
+                </tr>
+                <tr class="odd">
+                    <td class="sep">홈/팔로우</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr class="odd">
+                <tr class="even">
+                    <td rowspan="2">원격 (비팔로우)</td>
+                    <td class="sep">공개</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="check">✔</td>
+                </tr>
+                <tr class="even">
+                    <td class="sep">홈/팔로우</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
